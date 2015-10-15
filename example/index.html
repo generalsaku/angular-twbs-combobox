@@ -1,0 +1,50 @@
+<html ng-app="app">
+<head>
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <script src="libs/angular-twbs-combobox/1.0/js/angular-twbs-combobox.js"></script>
+    <link rel="stylesheet" href="libs/angular-twbs-combobox/1.0/css/angular-twbs-combobox.css" />
+
+    <script>
+        var app = angular.module("app", ['angular.twbs.combobox']);
+
+        app.controller("startController", function ($scope, $timeout) {
+            $scope.collection = [
+                { value: "1", text: "a", test: "1000" },
+                { value: "2", text: "b", test: "1000" },
+                { value: "3", text: "c", test: "1000" },
+                { value: "4", text: "d", test: "1000" },
+                { value: "5", text: "e", test: "1000" },
+            ];
+
+            $scope.item = $scope.collection[2];
+
+            $timeout(function () {
+                $scope.collection.push({ value: "6", text: "f", test: "1000" });
+            }, 3000);
+
+            $scope.doStuff = function (selected) {
+                console.log(selected);
+            }
+        });
+
+    </script>
+</head>
+<body>
+    <div ng-controller="startController">
+        <div style="width: 250px; margin: 20px;">
+            <ng-twbs-combobox collection="collection" selected="item" on-change="doStuff(selected)"><img style="height: 40px; padding: 2px;" src="content/img/david.jpg" />{{ $parent.item.value + ', ' + $parent.item.text + ', ' + $parent.item.test }}</ng-twbs-combobox>
+        </div>
+        <div style="width: 250px; margin: 20px;">
+            <ng-twbs-combobox collection="collection" selected="item" on-change="doStuff(selected)"><img style="height: 40px; padding: 2px;" src="content/img/david.jpg" />{{ $parent.item.value + ', ' + $parent.item.text + ', ' + $parent.item.test }}</ng-twbs-combobox>
+        </div>
+        <div style="width: 250px; margin: 20px;">
+            <ng-twbs-combobox collection="collection" selected="item" on-change="doStuff(selected)"><img style="height: 40px; padding: 2px;" src="content/img/david.jpg" />{{ $parent.item.value + ', ' + $parent.item.text + ', ' + $parent.item.test }}</ng-twbs-combobox>
+        </div>
+        <h3>{{item}}</h3>
+    </div>
+</body>
+</html>
