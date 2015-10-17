@@ -122,6 +122,10 @@
 
     , select: function () {
         var val = this.$menu.find('.active').attr('data-value');
+
+        if (!val)
+            val = this.$menu.find('li').attr('data-value');
+
         this.$element.val(this.updater($(val).text())).trigger('change');
         this.$target.val(this.map[val]).trigger('change');
         this.$source.val(this.map[val]).trigger('change');
