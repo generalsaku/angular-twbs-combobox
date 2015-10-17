@@ -468,6 +468,9 @@
     var module = angular.module('angular.twbs.combobox', []);
 
     module.directive("ngTwbsCombobox", ['$timeout', function ($timeout) {
+
+        var focused = false;
+
         return {
             restrict: "E",
             replace: true,
@@ -481,17 +484,16 @@
             transclude: true,
             template: "<select class='combobox'><option ng-repeat='item in collection' value='{{$index}}' ng-transclude></option></select>",
             link: function (scope, element, attrs) {
-
                 scope.$watchCollection('collection', function () {
 
                     $timeout(function () {
 
-                        if ($(element).siblings(".combobox-container").length > 0) {
-			    $(element).val([]);
-                            $(element).data('combobox').refresh();
+                        if (element.siblings(".combobox-container").length > 0) {
+			                element.val([]);
+                            element.data('combobox').refresh();
                         }
                         else {
-                            $(element).combobox();
+                            element.combobox();
                         }
 
                         // attach event bindings
@@ -503,21 +505,31 @@
                             else
                                 scope.selected = undefined;
 
-                            scope.$apply(function () {
-                                scope.onChange({ selected: scope.selected });
-                            });
+                            if (index !== "") {
+                                scope.$apply(function () {
+                                    scope.onChange({ selected: scope.selected });
+                                });
+                            }
                         });
 
                         element.off('blur').on('blur', function (e) {
-                            scope.$apply(function () {
-                                scope.onBlur();
-                            });
+                            if (focused) {
+                                focused = false;
+
+                                scope.$apply(function () {
+                                    scope.onBlur();
+                                });
+                            }
                         });
 
                         element.off('focusin').on('focusin', function (e) {
-                            scope.$apply(function () {
-                                scope.onFocus();
-                            });
+                            if (!focused) {
+                                focused = true;
+
+                                scope.$apply(function () {
+                                    scope.onFocus();
+                                });
+                            }
                         });
                     });
                 });
@@ -526,10 +538,10 @@
                     $timeout(function () {
                         if (scope.selected) {
                             var selectedIndex = scope.collection.indexOf(scope.selected);
-                            $(element).val(selectedIndex);
-                            $(element).data('combobox').refresh();
-                        } else if ($(element).siblings(".combobox-container").length > 0) {
-                            $(element).data('combobox').clear();
+                            element.val(selectedIndex);
+                            element.data('combobox').refresh();
+                        } else if (element.siblings(".combobox-container").length > 0) {
+                            element.data('combobox').clear();
                         }
                     });
                 });
