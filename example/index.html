@@ -20,7 +20,7 @@
                 { value: "5", text: "e", test: "1000" },
             ];
 
-            $scope.item = $scope.collection[2];
+            //$scope.item = $scope.collection[2];
 
             $timeout(function () {
                 $scope.collection.push({ value: "6", text: "f", test: "1000" });
@@ -38,12 +38,12 @@
         <div style="width: 250px; margin: 20px;">
             <ng-twbs-combobox collection="collection" selected="item" on-change="doStuff(selected)"><img style="height: 40px; padding: 2px;" src="content/img/david.jpg" />{{ $parent.item.value + ', ' + $parent.item.text + ', ' + $parent.item.test }}</ng-twbs-combobox>
         </div>
-        <div style="width: 250px; margin: 20px;">
+        <!--<div style="width: 250px; margin: 20px;">
             <ng-twbs-combobox collection="collection" selected="item" on-change="doStuff(selected)"><img style="height: 40px; padding: 2px;" src="content/img/david.jpg" />{{ $parent.item.value + ', ' + $parent.item.text + ', ' + $parent.item.test }}</ng-twbs-combobox>
         </div>
         <div style="width: 250px; margin: 20px;">
             <ng-twbs-combobox collection="collection" selected="item" on-change="doStuff(selected)"><img style="height: 40px; padding: 2px;" src="content/img/david.jpg" />{{ $parent.item.value + ', ' + $parent.item.text + ', ' + $parent.item.test }}</ng-twbs-combobox>
-        </div>
+        </div>-->
         <h3>{{item}}</h3>
     </div>
 </body>
