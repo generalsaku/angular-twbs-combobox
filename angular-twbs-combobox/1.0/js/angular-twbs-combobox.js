@@ -47,6 +47,8 @@
         this.shown = false;
         this.selected = false;
         this.cleared = false;
+        this.focusCount = 0;
+        this.externalSearch = false;
         this.refresh();
         this.transferAttributes();
         this.listen();
@@ -169,7 +171,10 @@
 
         , lookup: function (event) {
             this.query = this.$element.val();
-        
+            
+            if (this.externalSearch)
+                this.$source.trigger('lookup', [this.query]);
+
             return this.process(this.source);
         }
 
@@ -198,6 +203,9 @@
         }
 
         , matcher: function (item) {
+            if (this.externalSearch)
+                return true;
+
             var itemText = $(item).text();
 
             if (this.$button.is(":visible")) // dropdown is available
@@ -411,8 +419,12 @@
         }
 
         , focus: function (e) {
-            this.$source.trigger("focusin"); // could not fire focus on select (fire any custom event)
+            if (this.focusCount > 0)
+                this.$source.trigger("focusin"); // could not fire focus on select (fire any custom event)
+            
             this.focused = true;
+
+            this.focusCount += 1;
         }
 
         , blur: function (e) {
@@ -488,6 +500,7 @@
                 onChange: "&",
                 onFocus: "&",
                 onBlur: "&",
+                onLookup: "&",
             },
             transclude: true,
             template: "<select class='combobox'><option ng-repeat='item in collection' value='{{$index}}' ng-transclude></option></select>",
@@ -503,6 +516,9 @@
                         else {
                             element.combobox();
                         }
+
+                        if ("onLookup" in attrs)
+                            element.data('combobox').externalSearch = true;
 
                         // attach event bindings
                         element.off('change').on('change', function (e) {
@@ -522,7 +538,7 @@
 
                         element.off('blur').on('blur', function (e) {
                             if (focused && !element.data('combobox').shown && !element.data("combobox").cleared) {
-
+                                console.log("blur");
                                 focused = false;
 
                                 scope.$apply(function () {
@@ -533,13 +549,19 @@
 
                         element.off('focusin').on('focusin', function (e) {
                             if (!focused) {
-
+                                console.log("focusin");
                                 focused = true;
 
                                 scope.$apply(function () {
                                     scope.onFocus();
                                 });
                             }
+                        });
+
+                        element.off('lookup').on('lookup', function (e, query) {
+                            scope.$apply(function () {
+                                scope.onLookup({ query: query });
+                            });
                         });
                     });
                 });
