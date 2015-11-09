@@ -58,7 +58,11 @@
     max-height: 600px;
 }
 
-.combobox-container .dropdown-menu>li>a {
+.combobox-container .dropdown-menu>li:hover {
+   background-color: blue;
+}
+
+.combobox-container .dropdown-menu>li>div {
     padding: 0px 0px;
 }
 

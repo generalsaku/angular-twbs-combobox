@@ -242,7 +242,12 @@
 
             items = $(items).map(function (i, item) {
                 i = $(that.options.item).attr('data-value', item);
-                i.find('a').html(item);
+                
+                if ($(item).is("a"))
+                    i.find('a').parent().html(item);
+                else
+                    i.find('a').html(item);
+
                 return i[0];
             })
 

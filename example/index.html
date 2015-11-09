@@ -39,8 +39,12 @@
 </head>
 <body>
     <div ng-controller="startController">
+		<input type="text" />
         <div style="width: 250px; margin: 20px;">
-            <ng-twbs-combobox collection="collection" on-lookup="search(query)" selected="item" on-change="doStuff(selected)"><img style="height: 40px; padding: 2px;" src="content/img/david.jpg" />{{ $parent.item.value + ', ' + $parent.item.text + ', ' + $parent.item.test }}</ng-twbs-combobox>
+            <ng-twbs-combobox collection="collection" on-lookup="search(query)" selected="item" on-change="doStuff(selected)"><a><img style="height: 40px; padding: 2px;" src="content/img/david.jpg" />{{ $parent.item.value + ', ' + $parent.item.text + ', ' + $parent.item.test }}</a></ng-twbs-combobox>
+        </div>
+		<div style="width: 250px; margin: 20px;">
+            <ng-twbs-combobox collection="collection" on-lookup="search(query)" selected="item" on-change="doStuff(selected)"><a><img style="height: 40px; padding: 2px;" src="content/img/david.jpg" />{{ $parent.item.value + ', ' + $parent.item.text + ', ' + $parent.item.test }}</a></ng-twbs-combobox>
         </div>
         <!--<div style="width: 250px; margin: 20px;">
             <ng-twbs-combobox collection="collection" selected="item" on-change="doStuff(selected)"><img style="height: 40px; padding: 2px;" src="content/img/david.jpg" />{{ $parent.item.value + ', ' + $parent.item.text + ', ' + $parent.item.test }}</ng-twbs-combobox>
