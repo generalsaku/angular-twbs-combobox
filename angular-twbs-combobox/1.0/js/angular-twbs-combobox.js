@@ -433,17 +433,19 @@
         }
 
         , blur: function (e) {
-            var that = this;
-            this.focused = false;
-            var val = this.$element.val();
-            if (!this.selected && val !== '') {
-                this.$element.val('');
-                this.$source.val('').trigger('change');
-                this.$target.val('').trigger('change');
-            }
-            if (!this.mousedover && this.shown) { setTimeout(function () { that.hide(); }, 200); }
+            setTimeout(function () {
+                var that = this;
+                this.focused = false;
+                var val = this.$element.val();
+                if (!this.selected && val !== '') {
+                    this.$element.val('');
+                    this.$source.val('').trigger('change');
+                    this.$target.val('').trigger('change');
+                }
+                if (!this.mousedover && this.shown) { setTimeout(function () { that.hide(); }, 200); }
 
-            setTimeout(function (arg) { arg.$source.trigger("blur"); }, 200, this);
+                setTimeout(function (arg) { arg.$source.trigger("blur"); }, 200, this);
+            }, 80);
         }
 
         , click: function (e) {
