@@ -452,10 +452,11 @@
             if (typeof href === typeof undefined || href === false || href === "#" || href === "") {
                 e.stopPropagation();
                 e.preventDefault();
-                this.select();
-                this.$element.focus();
-                this.cleared = false;
             }
+
+            this.select();
+            this.$element.focus();
+            this.cleared = false;
         }
 
         , mouseenter: function (e) {
