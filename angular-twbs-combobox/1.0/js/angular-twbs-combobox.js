@@ -447,11 +447,15 @@
         }
 
         , click: function (e) {
-            e.stopPropagation();
-            e.preventDefault();
-            this.select();
-            this.$element.focus();
-            this.cleared = false;
+            var href = $(e.target).attr('href');
+
+            if (typeof href === typeof undefined || href === false || href === "#" || href === "") {
+                e.stopPropagation();
+                e.preventDefault();
+                this.select();
+                this.$element.focus();
+                this.cleared = false;
+            }
         }
 
         , mouseenter: function (e) {
