@@ -328,6 +328,10 @@
         }
 
         , listen: function () {
+
+            this.$container
+                .on('click', $.proxy(this.bodyClick, this));
+
             this.$element
               .on('focus', $.proxy(this.focus, this))
               .on('blur', $.proxy(this.blur, this))
@@ -468,6 +472,10 @@
         , mouseleave: function (e) {
             this.mousedover = false;
         }
+
+        , bodyClick: function (e) {
+            this.$source.trigger('bodyClick');
+        }
     };
 
     /* COMBOBOX PLUGIN DEFINITION
@@ -511,6 +519,7 @@
                 onFocus: "&",
                 onBlur: "&",
                 onLookup: "&",
+                onBodyClick: "&",
             },
             transclude: true,
             template: "<select class='combobox'><option ng-repeat='item in collection' value='{{$index}}' ng-transclude></option></select>",
@@ -531,6 +540,12 @@
                             element.data('combobox').externalSearch = true;
 
                         // attach event bindings
+                        element.off('bodyClick').on('bodyClick', function (e) {
+                            scope.$apply(function () {
+                                scope.onBodyClick();
+                            });
+                        });
+
                         element.off('change').on('change', function (e) {
                             var index = element.siblings(".combobox-container").children("input[type='hidden']").val();
 
@@ -548,7 +563,7 @@
 
                         element.off('blur').on('blur', function (e) {
                             if (focused && !element.data('combobox').shown && !element.data("combobox").cleared) {
-                                console.log("blur");
+
                                 focused = false;
 
                                 scope.$apply(function () {
@@ -559,7 +574,6 @@
 
                         element.off('focusin').on('focusin', function (e) {
                             if (!focused) {
-                                console.log("focusin");
                                 focused = true;
 
                                 scope.$apply(function () {
