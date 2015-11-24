@@ -306,7 +306,7 @@
             }
         }
         , clearElement: function () {
-            this.$element.val('').focus();
+            this.$element.val('').focus().blur();
         }
 
         , clearTarget: function () {
