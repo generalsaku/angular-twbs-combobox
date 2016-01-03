@@ -249,6 +249,8 @@
             items = $(items).map(function (i, item) {
                 i = $(that.options.item).attr('data-value', item);
 
+                item = item.replace(/<!--(?!>)[\S\s]*?-->/g, '');
+
                 if (typeof $(item).attr('override') !== typeof undefined && $(item).attr('override') !== false)
                     i.find('a').parent().html(item);
                 else if ($(item).is("a"))
