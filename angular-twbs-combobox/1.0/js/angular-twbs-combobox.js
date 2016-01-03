@@ -585,6 +585,9 @@
                         element.off('lookup').on('lookup', function (e, query) {
                             scope.$apply(function () {
                                 scope.onLookup({ query: query });
+
+                                element.val([]);
+                                element.data('combobox').refresh();
                             });
                         });
                     });
