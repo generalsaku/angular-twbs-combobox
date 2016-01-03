@@ -194,6 +194,10 @@
             return this.render(items.slice(0, this.options.items)).show();
         }
 
+        , showItems: function () {
+            this.$menu.find('li').addClass("active");
+        }
+
         , template: function () {
             if (this.options.bsVersion == '2') {
                 return '<div class="combobox-container"><input type="hidden" /> <div class="input-append"> <input type="text" autocomplete="off" /> <span class="add-on dropdown-toggle" data-dropdown="dropdown"> <span class="caret"/> <i class="icon-remove"/> </span> </div> </div>'
@@ -325,6 +329,9 @@
         , refresh: function () {
             this.source = this.parse();
             this.options.items = this.source.length;
+
+            if (this.externalSearch)
+                this.process(this.source);
         }
 
         , listen: function () {
@@ -530,7 +537,7 @@
 
                         if (element.siblings(".combobox-container").length > 0) {
 			                element.val([]);
-                            element.data('combobox').refresh();
+			                element.data('combobox').refresh();
                         }
                         else {
                             element.combobox();
@@ -538,7 +545,7 @@
 
                         if ("onLookup" in attrs)
                             element.data('combobox').externalSearch = true;
-
+                        
                         // attach event bindings
                         element.off('bodyClick').on('bodyClick', function (e) {
                             scope.$apply(function () {
@@ -585,10 +592,10 @@
                         element.off('lookup').on('lookup', function (e, query) {
                             scope.$apply(function () {
                                 scope.onLookup({ query: query });
-
-                                element.val([]);
-                                element.data('combobox').refresh();
+                                element.data('combobox').show();
                             });
+
+                            
                         });
                     });
                 });

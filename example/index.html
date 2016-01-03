@@ -23,7 +23,7 @@
             //$scope.item = $scope.collection[2];
 
             $timeout(function () {
-                $scope.collection.push({ value: "6", text: "f", test: "1000" });
+                //$scope.collection.push({ value: "6", text: "f", test: "1000" });
             }, 3000);
 
             $scope.doStuff = function (selected) {
@@ -31,6 +31,24 @@
             }
 
             $scope.search = function (query) {
+                $scope.collection = [
+                    { value: "1", text: "a", test: "1000" },
+                    { value: "2", text: "b", test: "1000" },
+                    { value: "3", text: "c", test: "1000" },
+                    { value: "4", text: "d", test: "1000" },
+                    { value: "5", text: "e", test: "1000" },
+                    { value: "1", text: "a", test: "1000" },
+                    { value: "2", text: "b", test: "1000" },
+                    { value: "3", text: "c", test: "1000" },
+                    { value: "4", text: "d", test: "1000" },
+                    { value: "5", text: "e", test: "1000" },
+                    { value: "1", text: "a", test: "1000" },
+                    { value: "2", text: "b", test: "1000" },
+                    { value: "3", text: "c", test: "1000" },
+                    { value: "4", text: "d", test: "1000" },
+                    { value: "5", text: "e", test: "1000" },
+                ];
+
                 $scope.query = query;
             }
         });
