@@ -47,6 +47,7 @@
         this.shown = false;
         this.selected = false;
         this.cleared = false;
+        this.turnOffProcessOnce = false;
         this.focusCount = 0;
         this.externalSearch = false;
         this.refresh();
@@ -179,23 +180,24 @@
         }
 
         , process: function (items) {
-            var that = this;
+            if (!this.turnOffProcessOnce)
+            {
+                var that = this;
 
-            items = $.grep(items, function (item) {
-                return that.matcher(item);
-            })
+                items = $.grep(items, function (item) {
+                    return that.matcher(item);
+                })
 
-            items = this.sorter(items);
+                items = this.sorter(items);
 
-            if (!items.length) {
-                return this.shown ? this.hide() : this;
+                if (!items.length) {
+                    return this.shown ? this.hide() : this;
+                }
+
+                return this.render(items.slice(0, this.options.items)).show();
             }
 
-            return this.render(items.slice(0, this.options.items)).show();
-        }
-
-        , showItems: function () {
-            this.$menu.find('li').addClass("active");
+            this.turnOffProcessOnce = false;
         }
 
         , template: function () {
@@ -464,6 +466,8 @@
                 e.stopPropagation();
                 e.preventDefault();
             }
+
+            this.turnOffProcessOnce = true;
 
             this.select();
             this.$element.focus();
