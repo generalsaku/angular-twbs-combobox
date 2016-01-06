@@ -88,20 +88,20 @@
             this.$source.find('option').each(function () {
                 var option = $(this);
                 if (option.val() === '') {
-                    that.options.placeholder = option.html();
+                    that.options.placeholder = option.html().replace(/^\s\s*/, '').replace(/\s\s*$/, '');
                     return;
                 }
                 map[option.html()] = option.val();
-                source.push(option.html());
+                source.push(option.html().replace(/^\s\s*/, '').replace(/\s\s*$/, ''));
                 if (option.prop('selected')) {
-                    selected = option.html();
-                    selectedValue = option.val();
+                    selected = option.html().replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+                    selectedValue = option.val().replace(/^\s\s*/, '').replace(/\s\s*$/, '');
                 }
             })
             this.map = map;
             if (selected) {
-                this.$element.val($(selected).text());
-                this.$target.val(selectedValue);
+                this.$element.val($(selected).text().replace(/^\s\s*/, '').replace(/\s\s*$/, ''));
+                this.$target.val(selectedValue.replace(/^\s\s*/, '').replace(/\s\s*$/, ''));
                 this.$container.addClass('combobox-selected');
                 this.selected = true;
             }
@@ -132,7 +132,7 @@
 
             val = val.replace(/^\s\s*/, '').replace(/\s\s*$/, ''); // clean spacing before and after string
 
-            this.$element.val(this.updater($(val).text())).trigger('change');
+            this.$element.val(this.updater($(val).text().replace(/^\s\s*/, '').replace(/\s\s*$/, ''))).trigger('change');
             this.$target.val(this.map[val]).trigger('change');
             this.$source.val(this.map[val]).trigger('change');
             this.$container.addClass('combobox-selected');
