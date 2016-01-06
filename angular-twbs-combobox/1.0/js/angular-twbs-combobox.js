@@ -130,7 +130,9 @@
             if (!val)
                 val = this.$menu.find('li').attr('data-value');
 
-            this.$element.val(this.updater($(val).text().replace(/^\s\s*/, '').replace(/\s\s*$/, ''))).trigger('change');
+            val = val.replace(/^\s\s*/, '').replace(/\s\s*$/, ''); // clean spacing before and after string
+
+            this.$element.val(this.updater($(val).text())).trigger('change');
             this.$target.val(this.map[val]).trigger('change');
             this.$source.val(this.map[val]).trigger('change');
             this.$container.addClass('combobox-selected');
